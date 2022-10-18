@@ -5,18 +5,15 @@ pipeline {
     registryCredential = 'dockerhub'
   }
   agent any
+
   stages {
-    stage('Building image') {
+stage('Building image') {
       steps{
         script {
           docker.build registry + ":$BUILD_NUMBER"
         }
       }
     }
-  }
-
-  stages {
-
     stage('Checkout Source') {
       steps {
         git url:'https://github.com/rayhannour/ttpipeline.git', branch:'main'
