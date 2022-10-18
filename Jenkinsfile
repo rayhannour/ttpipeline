@@ -1,33 +1,24 @@
 pipeline {
+agent any
 
   environment {
-    registry = "https://hub.docker.com/repository/docker/090380/smgsapp-v1"
-    registryCredential = 'dockerhub'
+    dockerhub= credentials('dockerhub')   
   }
-  agent any
-
+  
   stages {
-stage('Building image') {
-      steps{
-        script {
-          docker.build registry + ":$BUILD_NUMBER"
-        }
-      }
-    }
-    stage('Checkout Source') {
-      steps {
-        git url:'https://github.com/rayhannour/ttpipeline.git', branch:'main'
+  
+  stage('Building image') {
+      steps{       
+        sh 'docker build -t smgsapps-v1:1.01  .'        
       }
     }
 
-    stage('Deploy App') {
-      steps {
-        script {
-          kubernetesDeploy(configs: "deployment.yaml", kubeconfigId: "kubernetes")
-        }
+  stage('Publish docker hub') {
+      steps{       
+        sh 'docker tag smgsapps-v1:1.01  090380/smgsapp-v1:v1.01 '        
+	sh 'docker push  090380/smgsapp-v1:v1.01 ' 
       }
     }
-
   }
 
 }
