@@ -1,0 +1,23 @@
+pipeline {
+
+  
+
+  stages {
+
+    stage('Checkout Source') {
+      steps {
+        git url:'https://github.com/rayhannour/ttpipeline.git', branch:'main'
+      }
+    }
+
+    stage('Deploy App') {
+      steps {
+        script {
+          kubernetesDeploy(configs: "nginx.yaml", kubeconfigId: "mykubeconfig")
+        }
+      }
+    }
+
+  }
+
+}
