@@ -1,6 +1,19 @@
 pipeline {
 
+  environment {
+    registry = "https://hub.docker.com/repository/docker/090380/smgsapp-v1"
+    registryCredential = 'dockerhub'
+  }
   agent any
+  stages {
+    stage('Building image') {
+      steps{
+        script {
+          docker.build registry + ":$BUILD_NUMBER"
+        }
+      }
+    }
+  }
 
   stages {
 
