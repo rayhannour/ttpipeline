@@ -14,7 +14,8 @@ agent any
     	}
 	stage('Push image') {
         	withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-        	sh 'docker push  090380/smgsapp-v1:v1.01 ' 
+        		sh 'docker push  090380/smgsapp-v1:v1.01 ' 
+		}
         }
    }
 
