@@ -9,14 +9,14 @@ agent any
   
   	stage('Building image') {
       		steps{       
-        		sh 'docker build -t 090380/smgsapp-v1:1.01  .'        
+        		sh 'docker build -t 090380/sms-sapp-v1:1.01  .'        
       		}
     	}
 	stage('Push image') {
 	 steps{
         	withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
-        		sh 'docker push  090380/smgsapp-v1:v1.01 ' 
-			sh 'docker pull  090380/smgsapp-v1:v1.01 ' 
+        		sh 'docker push  090380/sms-sapp-v1:1.01 ' 
+			sh 'docker pull  090380/sms-sapp-v1:1.01 '			
 		}
          }
         }
